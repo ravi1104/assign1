@@ -4,9 +4,11 @@ from .models import Alldata
 from .serializers import AlldataSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
 
+from rest_flex_fields.views import FlexFieldsModelViewSet
 
-
+@csrf_exempt
 def api_alldata(request):
     if request.method=="GET":
         ald=Alldata.objects.all()
@@ -15,13 +17,13 @@ def api_alldata(request):
         return JsonResponse(serializer.data,safe=False)
 
     if request.method=="POST":
-        data=JSONParser().parse(request)
-        serializer=AlldataSerializer(data=data)
+        class ImageViewSet(FlexFieldsModelViewSet):
+            serializer_class = AlldataSerializer
 
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data,status=201)
-        return JsonResponse(serializer.data,status=400)
+            queryset = Alldata.objects.all()
+
+        return HttpResponse(status=201)
+
 
 def api_listdata(request,pk):
     data=Alldata.objects.get(id=pk)

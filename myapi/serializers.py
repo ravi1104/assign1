@@ -13,4 +13,6 @@ class AlldataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Alldata
-        fields = ('name','length','latitude','timestamp','photo')
+        fields = ('name','species','weight','length','latitude','longitude','timestamp','photo')
+    def create(self, validated_data):
+        return Alldata.objects.create(**validated_data)

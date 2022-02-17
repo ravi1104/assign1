@@ -1,7 +1,7 @@
 from django.db import models
-
+from django.dispatch import receiver
 from versatileimagefield.fields import VersatileImageField, PPOIField
-
+from versatileimagefield.image_warmer import VersatileImageFieldWarmer
 
 class Alldata(models.Model):
 
@@ -24,10 +24,20 @@ class Alldata(models.Model):
     photo = VersatileImageField(
         'photo',
         upload_to='photo/',
-        ppoi_field='photo_ppoi'
+        ppoi_field='photo_ppoi',null=True,default=""
     )
     photo_ppoi = PPOIField()
 
     class Meta:
         verbose_name = 'Alldata'
         verbose_name_plural = 'Alldata'
+
+@receiver(models.signals.post_save, sender=Alldata)
+def warm_Alldata_headshot_images(sender, instance, **kwargs):
+
+    Alldata_img_warmer = VersatileImageFieldWarmer(
+        instance_or_queryset=instance,
+        rendition_key_set='photodata',
+        image_attr='photo'
+    )
+    num_created, failed_to_create = Alldata_img_warmer.warm()
