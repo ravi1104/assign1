@@ -8,7 +8,7 @@ from rest_framework import viewsets
 @csrf_exempt
 def api_alldata(request):
     if request.method=="GET":
-        ald=Alldata.objects.all()
+        ald=Alldata.objects.order_by('-timestamp')
         serializer=AlldataSerializer(ald,many=True)
 
         return JsonResponse(serializer.data,safe=False)
@@ -19,5 +19,6 @@ def api_listdata(request,pk):
     return JsonResponse(serializer.data)
 
 class Imageuploadviewset(viewsets.ModelViewSet):
-   queryset =Alldata.objects.all()
-   serializer_class = AlldataSerializer
+    queryset =Alldata.objects.all()
+    serializer_class = AlldataSerializer
+

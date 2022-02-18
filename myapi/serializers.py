@@ -13,4 +13,4 @@ class AlldataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Alldata
-        fields = ('name','species','weight','length','latitude','longitude','timestamp','photo')
+        fields = ('id','name','species','weight','length','latitude','longitude','timestamp','photo')

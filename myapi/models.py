@@ -31,6 +31,8 @@ class Alldata(models.Model):
     class Meta:
         verbose_name = 'Alldata'
         verbose_name_plural = 'Alldata'
+        ordering = ('timestamp',)
+
 
 @receiver(models.signals.post_save, sender=Alldata)
 def warm_Alldata_headshot_images(sender, instance, **kwargs):
