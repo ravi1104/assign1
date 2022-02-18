@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,9 +73,7 @@ TEMPLATES = [
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'photodata': [
         ('full_size', 'url'),
-        ('thumbnail', 'thumbnail__100x100'),
-        ('medium_square_crop', 'crop__400x400'),
-        ('small_square_crop', 'crop__50x50')
+        ('resized', 'thumbnail__140x140'),
     ]
 }
 WSGI_APPLICATION = 'mysite.wsgi.application'
@@ -138,6 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 MEDIA_ROOT = '/home/Ravi11/mysite/media'
-MEDIA_URL = '/media/'
+MEDIA_URL = 'Ravi11.pythonanywhere.com/media/'
 STATIC_ROOT = '/home/Ravi11/mysite/static'
 STATIC_URL = '/static/'
